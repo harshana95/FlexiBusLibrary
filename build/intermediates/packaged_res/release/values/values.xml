@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlixBus Library</string>
+    <style name="AppTheme.DialogMinWidth" parent="Theme.AppCompat.Dialog.MinWidth">
+
+        <!-- Dialog attributes -->
+        <item name="dialogCornerRadius">2dp</item>
+
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+</resources>
