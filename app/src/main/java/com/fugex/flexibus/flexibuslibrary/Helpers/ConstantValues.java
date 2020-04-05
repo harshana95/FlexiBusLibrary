@@ -1,4 +1,4 @@
-package com.fugex.flexibus.flixbuslibrary.Helpers;
+package com.fugex.flexibus.flexibuslibrary.Helpers;
 
 public enum ConstantValues {
 

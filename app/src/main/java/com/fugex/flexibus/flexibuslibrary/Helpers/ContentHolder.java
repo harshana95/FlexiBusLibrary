@@ -1,6 +1,6 @@
-package com.fugex.flexibus.flixbuslibrary.Helpers;
+package com.fugex.flexibus.flexibuslibrary.Helpers;
 
-import com.fugex.flexibus.flixbuslibrary.Models.*;
+import com.fugex.flexibus.flexibuslibrary.Models.*;
 import com.google.firebase.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;

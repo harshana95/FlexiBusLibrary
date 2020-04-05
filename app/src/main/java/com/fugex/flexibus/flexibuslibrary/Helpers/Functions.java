@@ -1,10 +1,10 @@
-package com.fugex.flexibus.flixbuslibrary.Helpers;
+package com.fugex.flexibus.flexibuslibrary.Helpers;
 
 import android.graphics.Bitmap;
 import android.util.Log;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
-import com.fugex.flexibus.flixbuslibrary.Models.Transaction;
+import com.fugex.flexibus.flexibuslibrary.Models.Transaction;
 import com.google.zxing.WriterException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

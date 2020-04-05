@@ -1,4 +1,4 @@
-package com.fugex.flexibus.flixbuslibrary.Models;
+package com.fugex.flexibus.flexibuslibrary.Models;
 
 import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;

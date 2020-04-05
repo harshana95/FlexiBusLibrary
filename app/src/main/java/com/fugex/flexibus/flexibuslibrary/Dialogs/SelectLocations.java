@@ -1,4 +1,4 @@
-package com.fugex.flexibus.flixbuslibrary.Dialogs;
+package com.fugex.flexibus.flexibuslibrary.Dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import com.fugex.flexibus.flixbuslibrary.Helpers.DatabaseHandler;
-import com.fugex.flexibus.flixbuslibrary.Models.City;
-import com.fugex.flexibus.flixbuslibrary.Models.MyLocation;
-import com.fugex.flexibus.flixbuslibrary.R;
+import com.fugex.flexibus.flexibuslibrary.Helpers.DatabaseHandler;
+import com.fugex.flexibus.flexibuslibrary.Models.City;
+import com.fugex.flexibus.flexibuslibrary.Models.MyLocation;
+import com.fugex.flexibus.flexibuslibrary.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener;
 import com.google.android.gms.maps.OnMapReadyCallback;

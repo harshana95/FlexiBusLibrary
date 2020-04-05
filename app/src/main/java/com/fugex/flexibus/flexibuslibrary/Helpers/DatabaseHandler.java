@@ -1,12 +1,12 @@
-package com.fugex.flexibus.flixbuslibrary.Helpers;
+package com.fugex.flexibus.flexibuslibrary.Helpers;
 
 import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.fugex.flexibus.flixbuslibrary.Dialogs.SelectLocations;
-import com.fugex.flexibus.flixbuslibrary.Models.*;
+import com.fugex.flexibus.flexibuslibrary.Dialogs.SelectLocations;
+import com.fugex.flexibus.flexibuslibrary.Models.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,7 +1,7 @@
 /**
  * Automatically generated file. DO NOT MODIFY
  */
-package com.fugex.flexibus.flixbuslibrary;
+package com.fugex.flexibus.flexibuslibrary;
 
 public final class BuildConfig {
   public static final boolean DEBUG = Boolean.parseBoolean("true");

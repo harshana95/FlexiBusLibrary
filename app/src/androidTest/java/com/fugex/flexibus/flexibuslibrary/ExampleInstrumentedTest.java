@@ -1,4 +1,4 @@
-package com.fugex.flexibus.flixbuslibrary;
+package com.fugex.flexibus.flexibuslibrary;
 
 import android.content.Context;
 
