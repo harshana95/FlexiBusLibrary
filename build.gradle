@@ -1,47 +1,27 @@
-apply plugin: 'com.android.library'
-//apply plugin: 'com.github.dcendents.android-maven'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
-
-    defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
-
 }
 
-group = 'com.github.jitpack'
-version = '1.0'
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-
-    implementation 'com.google.firebase:firebase-database:19.2.0'
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
-    implementation 'com.google.firebase:firebase-storage:19.1.0'
-    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
