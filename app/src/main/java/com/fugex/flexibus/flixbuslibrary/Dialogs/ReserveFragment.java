@@ -32,6 +32,7 @@ import com.fugex.flexibus.flixbuslibrary.Models.Bus;
 import com.fugex.flexibus.flixbuslibrary.Models.Schedule;
 import com.fugex.flexibus.flixbuslibrary.Models.Seat;
 import com.fugex.flexibus.flixbuslibrary.R;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
