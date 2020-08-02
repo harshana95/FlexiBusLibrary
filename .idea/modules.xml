@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FlixbusLibrary.iml" filepath="$PROJECT_DIR$/FlixbusLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="flexibuslib/app" />
+      <module fileurl="file://$PROJECT_DIR$/flexibuslib.iml" filepath="$PROJECT_DIR$/flexibuslib.iml" group="flexibuslib" />
+      <module fileurl="file://$PROJECT_DIR$/flexibuslibrary/flexibuslibrary.iml" filepath="$PROJECT_DIR$/flexibuslibrary/flexibuslibrary.iml" group="flexibuslib/flexibuslibrary" />
     </modules>
   </component>
 </project>

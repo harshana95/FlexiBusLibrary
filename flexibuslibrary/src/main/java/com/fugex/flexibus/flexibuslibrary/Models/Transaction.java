@@ -17,7 +17,6 @@ public class Transaction implements Serializable {
     private String email, contact;
     private ArrayList<String> bookingIds, personIds;
     private int journeyStart = -1, journeyEnd = -1;
-    private int boarding = -1, dropping = -1;
     private boolean isCheckedIn;
     private Date scheduleDate;
     private @ServerTimestamp
@@ -26,8 +25,8 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(String userID, Schedule schedule, String email, String contact, Bus bus, double baseFare,
-            double transactionFee) { // todo add other fees
+        public Transaction(String userID, Schedule schedule, String email, String contact, Bus bus, double baseFare,
+                double transactionFee) { // todo add other fees
         if (!schedule.getBusID().equals(bus.getID())) {
             throw new AssertionError();
         }
@@ -48,13 +47,10 @@ public class Transaction implements Serializable {
     }
 
     public double addTicket(Booking booking, PersonDetails personDetails) {
-        if (getBoarding() == -1 || getDropping() == -1 || getJourneyStart() == -1 || getJourneyEnd() == -1) {
-            setBoarding(booking.getBoarding());
-            setDropping(booking.getDropping());
+        if (getJourneyStart() == -1 || getJourneyEnd() == -1) {
             setJourneyStart(booking.getJourneyStart());
             setJourneyEnd(booking.getJourneyEnd());
-        } else if (getBoarding() != booking.getBoarding() || getDropping() != booking.getDropping() ||
-                getJourneyStart() != booking.getJourneyStart() || getJourneyEnd() != booking.getJourneyEnd()) {
+        } else if (getJourneyStart() != booking.getJourneyStart() || getJourneyEnd() != booking.getJourneyEnd()) {
             Log.e("Transaction", "Wrong booking added to transaction");
             return 0;
         }
@@ -70,17 +66,10 @@ public class Transaction implements Serializable {
         return ticketFare;
     }
 
-    public int getBoarding() {
-        return boarding;
-    }
-
     public String getContact() {
         return contact;
     }
 
-    public int getDropping() {
-        return dropping;
-    }
 
     public String getEmail() {
         return email;
@@ -114,9 +103,6 @@ public class Transaction implements Serializable {
         return isCheckedIn;
     }
 
-    public void setBoarding(final int boarding) {
-        this.boarding = boarding;
-    }
 
     public void setCheckedIn(final boolean checkedIn) {
         isCheckedIn = checkedIn;
@@ -126,9 +112,6 @@ public class Transaction implements Serializable {
         this.contact = contact;
     }
 
-    public void setDropping(final int dropping) {
-        this.dropping = dropping;
-    }
 
     public void setEmail(final String email) {
         this.email = email;

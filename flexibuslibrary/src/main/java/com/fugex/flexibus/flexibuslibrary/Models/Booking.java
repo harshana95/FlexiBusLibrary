@@ -21,7 +21,6 @@ public class Booking {
     private String scheduleID;
     private Date scheduleDate;
     private int journeyStart, journeyEnd;
-    private int boarding, dropping;
     private String seat;
     private int seatState;
     private boolean isCheckedIn;
@@ -33,7 +32,7 @@ public class Booking {
     }
 
     public Booking(String busID, String scheduleID, String userID,
-            Date scheduleDate, int journeyStart, int journeyEnd, int boarding, int dropping, String seat,
+            Date scheduleDate, int journeyStart, int journeyEnd,  String seat,
             int seatState) {
         this.busID = busID;
         this.userID = userID;
@@ -41,20 +40,11 @@ public class Booking {
         this.scheduleDate = scheduleDate;
         this.journeyStart = journeyStart;
         this.journeyEnd = journeyEnd;
-        this.boarding = boarding;
-        this.dropping = dropping;
         this.seat = seat;
         this.seatState = seatState;
         this.isCheckedIn = false;
     }
 
-    public int getBoarding() {
-        return boarding;
-    }
-
-    public int getDropping() {
-        return dropping;
-    }
 
     public String getPersonID() {
         return personID;
@@ -72,16 +62,9 @@ public class Booking {
         return isCheckedIn;
     }
 
-    public void setBoarding(final int boarding) {
-        this.boarding = boarding;
-    }
 
     public void setIsCheckedIn(final boolean checkedIn) {
         isCheckedIn = checkedIn;
-    }
-
-    public void setDropping(final int dropping) {
-        this.dropping = dropping;
     }
 
     public void setPersonID(final String personID) {
