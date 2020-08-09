@@ -1240,7 +1240,7 @@ public class DatabaseHandler {
                 });
             }
         }
-        
+
     }
 
     public class CityDatabaseHandler {

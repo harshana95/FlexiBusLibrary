@@ -103,21 +103,12 @@ public class SelectLocations extends DialogFragment {
                             busStops.add(stop);
                         }
                         String id = cityNames.get(idx) + "-" + stop;
-                        MyLocation location = new MyLocation(id, center.longitude, center.latitude);
-                        mDatabaseHandler.mCityDatabaseHandler.addCityBusStopLocation(location);
-                        stopName.setText("");
-                    }
-                });
-                btnAddCity.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(final View view) {
                         City city = new City();
-                        city.setName(cityNames.get(idx));
+                        city.setName(id);
+                        //check if same name city stop exist first
                         ArrayList<String> tmp = new ArrayList<>();
                         tmp.add(routeName);
                         city.setRoutes(tmp);
-                        city.setBusStopsInCity(busStops);
-                        busStops.clear();
                         CollectionReference ref = mDatabaseHandler.mCityDatabaseHandler.getCityRefTo();
                         ref.document(cityNames.get(idx)).set(city).addOnSuccessListener(
                                 new OnSuccessListener<Void>() {
@@ -134,6 +125,16 @@ public class SelectLocations extends DialogFragment {
 
                                     }
                                 });
+
+                        MyLocation location = new MyLocation(id, center.longitude, center.latitude);
+                        mDatabaseHandler.mCityDatabaseHandler.addCityBusStopLocation(location);
+                        stopName.setText("");
+                    }
+                });
+                btnAddCity.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        busStops.clear();
                     }
                 });
 
