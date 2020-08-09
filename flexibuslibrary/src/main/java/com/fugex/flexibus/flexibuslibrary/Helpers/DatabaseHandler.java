@@ -1259,8 +1259,7 @@ public class DatabaseHandler {
             });
         }
 
-        public void getCityBusStopLocation(City city, int stopIndex,
-                                           final OnSuccessCustomListener<MyLocation> listener) {
+        public void getCityBusStopLocation(City city, final OnSuccessCustomListener<MyLocation> listener) {
             Log.i(TAG, "Getting " + city.getName() + "city bus stop location");
             String stopName = city.getName();
             CollectionReference ref = getFireStore().collection("location");
