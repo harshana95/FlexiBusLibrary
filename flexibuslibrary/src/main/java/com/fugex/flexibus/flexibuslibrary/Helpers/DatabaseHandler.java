@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.fugex.flexibus.flexibuslibrary.Dialogs.SelectLocations;
 import com.fugex.flexibus.flexibuslibrary.Models.Booking;
 import com.fugex.flexibus.flexibuslibrary.Models.Bus;
 import com.fugex.flexibus.flexibuslibrary.Models.City;
@@ -1007,34 +1006,26 @@ public class DatabaseHandler {
                         public void onSuccess(final QuerySnapshot queryDocumentSnapshots) {
                             List<City> citiesResult = queryDocumentSnapshots
                                     .toObjects(City.class); // contains cities that are in route
-                            HashMap<String, City> stopsAlreadyInDB = new HashMap<>();
-                            for (City city : citiesResult) {
-                                stopsAlreadyInDB.put(city.getName(), city);
-                            }
-                            ArrayList<String> citiesToAdd = new ArrayList<>();
+                            if (citiesResult.size() != route.getStops().size())
+                                throw new AssertionError();
                             for (String stopName : route.getStops()) {
-                                if (stopsAlreadyInDB.keySet().contains(stopName)) {
-                                    City city = stopsAlreadyInDB.get(stopName);
-                                    if (city.getRoutes().contains(route.getRouteName())) {
-                                        // Nothing to do
-                                    } else {
-                                        // add route to current route list
-                                        ArrayList<String> tmp = city.getRoutes();
-                                        tmp.add(route.getRouteName());
-                                        city.setRoutes(tmp);
-                                        cityref.document(city.getName()).set(city);
+                                for (City city : citiesResult) {
+                                    if (city.getName().equals(stopName)) {
+                                        if (city.getRoutes().contains(route.getRouteName())) {
+                                            // Nothing to do
+                                        } else {
+                                            // add route to current route list
+                                            ArrayList<String> tmp = city.getRoutes();
+                                            tmp.add(route.getRouteName());
+                                            city.setRoutes(tmp);
+                                            cityref.document(city.getName()).set(city);
+                                        }
                                     }
-                                } else {
-                                    citiesToAdd.add(stopName);
+                                }
 
                                 }
                             }
-                            // new city to add
-                            SelectLocations selectLocations = SelectLocations
-                                    .newInstance(citiesToAdd, route.getRouteName());
-                            selectLocations.show(fragment.getActivity().getSupportFragmentManager(),
-                                    "selectLocations");
-                        }
+
                     });
             // add basic route details
             ref.document(id).set(route).addOnSuccessListener(new OnSuccessListener<Void>() {
