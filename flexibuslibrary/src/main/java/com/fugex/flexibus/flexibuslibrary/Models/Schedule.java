@@ -7,7 +7,7 @@ import java.util.Date;
 public class Schedule {
 
     private String routeName;
-    private String busID, ID;
+    private String busID, ID, conductorID;
     private Date date;
     private boolean isActive;
     private boolean isCompleted;

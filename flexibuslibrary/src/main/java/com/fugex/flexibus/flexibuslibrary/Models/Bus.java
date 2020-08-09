@@ -4,7 +4,7 @@ public class Bus {
 
     public enum Type {NORMAL, AC, SEMI_LUX, LUX}
 
-    private String ID, conductorID;
+    private String ID;
     private String busName, agencyName, plateNumber;
     private String routeName;
     private String startCity;
@@ -38,9 +38,6 @@ public class Bus {
         return busType;
     }
 
-    public String getConductorID() {
-        return conductorID;
-    }
 
     public void setAgencyName(final String agencyName) {
         this.agencyName = agencyName;
@@ -88,10 +85,6 @@ public class Bus {
 
     public void setBusType(final String busType) {
         this.busType = busType;
-    }
-
-    public void setConductorID(final String conductorID) {
-        this.conductorID = conductorID;
     }
 
     public void setID(final String ID) {

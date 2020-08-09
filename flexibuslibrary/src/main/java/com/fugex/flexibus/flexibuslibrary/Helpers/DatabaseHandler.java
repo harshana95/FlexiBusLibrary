@@ -328,6 +328,28 @@ public class DatabaseHandler {
 
         }
 
+        public void getAllSchedulesOfConductorInTime(final String conductorID, Date start, Date end,
+                                                     final OnSuccessCustomListener<ArrayList<Schedule>> listener){
+            Log.i(TAG, "Getting schedules on " + start + " to " + end + " with conductorID " + conductorID);
+
+            CollectionReference ref = getScheduleRef();
+            ref.whereGreaterThan("date", start).whereLessThan("date", end).whereEqualTo("conductorID", conductorID)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable final QuerySnapshot queryDocumentSnapshots,
+                                            @Nullable final FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Failed getting schedules for conductor:" + conductorID);
+                                Log.e(TAG, e.toString());
+                                listener.onFailure();
+                            } else {
+                                ArrayList<Schedule> schedules = (ArrayList<Schedule>) queryDocumentSnapshots.toObjects(Schedule.class);
+                                Log.i(TAG, schedules.size() + "schedules found for conductor:" + conductorID);
+                                listener.onSuccess(schedules);
+                            }
+                        }
+                    });
+        }
 
         public void addSchedule(Schedule schedule, final OnSuccessCustomListener<Boolean> listener) {
             String scheduleID = getScheduleRef().document().getId();
@@ -752,6 +774,7 @@ public class DatabaseHandler {
                     });
         }
 
+        // todo: Add Bus as a parameter and load only bookings of a particular bus
         public void getAllBookingsForDay(final OnSuccessCustomListener<ArrayList<Booking>> listener) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(Timestamp.now().toDate());
@@ -1217,25 +1240,7 @@ public class DatabaseHandler {
                 });
             }
         }
-
-        public void getBusesOfConductor(final String conductorID, final OnSuccessCustomListener<ArrayList<Bus>> listener) {
-            getBusRefTo().whereEqualTo("conductorID", conductorID).get().addOnSuccessListener(
-                    new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(final QuerySnapshot querySnapshot) {
-                            ArrayList<Bus> loadedBuses = (ArrayList<Bus>) querySnapshot.toObjects(Bus.class);
-                            Log.i(TAG, loadedBuses.size() + " buses found for conductor " + conductorID);
-                            listener.onSuccess(loadedBuses);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "Getting buses failed for conductor" + conductorID);
-                    Log.e(TAG, e.toString());
-                    listener.onFailure();
-                }
-            });
-        }
+        
     }
 
     public class CityDatabaseHandler {
@@ -1256,9 +1261,8 @@ public class DatabaseHandler {
 
         public void getCityBusStopLocation(City city, int stopIndex,
                                            final OnSuccessCustomListener<MyLocation> listener) {
-            Log.i(TAG, "Getting " + city.getName() + "city bus stop location of " + city.getBusStopsInCity()
-                    .get(stopIndex));
-            String stopName = city.getName() + "-" + city.getBusStopsInCity().get(stopIndex);
+            Log.i(TAG, "Getting " + city.getName() + "city bus stop location");
+            String stopName = city.getName();
             CollectionReference ref = getFireStore().collection("location");
             ref.document(stopName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
