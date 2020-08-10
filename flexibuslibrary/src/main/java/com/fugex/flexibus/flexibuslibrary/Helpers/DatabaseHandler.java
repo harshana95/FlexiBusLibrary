@@ -984,6 +984,23 @@ public class DatabaseHandler {
             });
         }
 
+        public void getAllRoutes(final OnSuccessCustomListener<ArrayList<Route>> listener) {
+            Log.i(TAG, "Getting all routes ");
+            getRouteRefTo().get().addOnSuccessListener(
+                    new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(final QuerySnapshot querySnapshot) {
+                            listener.onSuccess((ArrayList<Route>) querySnapshot.toObjects(Route.class));
+                        }
+
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    listener.onFailure();
+                }
+            });
+        }
+
         public String addRoute(final Route route, final double[][] prices, final Fragment fragment) {
             Log.i(TAG, "Adding route " + route);
             final CollectionReference ref = getRouteRefTo();
@@ -1230,6 +1247,27 @@ public class DatabaseHandler {
                     }
                 });
             }
+        }
+
+        public void getBusesOnRoute(final String routeID, final OnSuccessCustomListener<ArrayList<Bus>> listener) {
+
+            getBusRefTo().whereEqualTo("routeName", routeID).get().addOnSuccessListener(
+                    new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(final QuerySnapshot querySnapshot) {
+                            ArrayList<Bus> loadedBuses = (ArrayList<Bus>) querySnapshot.toObjects(Bus.class);
+                            Log.i(TAG, loadedBuses.size() + " buses found for route " + routeID);
+                            listener.onSuccess(loadedBuses);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "Getting buses failed in route " + routeID);
+                    Log.e(TAG, e.toString());
+                    listener.onFailure();
+                }
+            });
+
         }
 
     }

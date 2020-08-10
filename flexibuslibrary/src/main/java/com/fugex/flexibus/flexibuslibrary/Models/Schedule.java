@@ -1,9 +1,7 @@
 package com.fugex.flexibus.flexibuslibrary.Models;
 
-import com.google.firebase.firestore.IgnoreExtraProperties;
 import java.util.Date;
 
-@IgnoreExtraProperties
 public class Schedule {
 
     private String routeName;
@@ -15,9 +13,10 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(String routeName, String busID, Date date) {
+    public Schedule(String routeName, String busID, String conductorID, Date date) {
         this.routeName = routeName;
         this.busID = busID;
+        this.conductorID = conductorID;
         this.date = date;
         this.isActive = false;
         this.isCompleted = false;
@@ -63,6 +62,10 @@ public class Schedule {
         this.routeName = routeName;
     }
 
+    public void setConductorID(final String conductorID) {
+        this.conductorID = conductorID;
+    }
+
     public String getBusID() {
         return busID;
     }
@@ -71,4 +74,7 @@ public class Schedule {
         return routeName;
     }
 
+    public String getConductorID() {
+        return conductorID;
+    }
 }
