@@ -222,6 +222,28 @@ public class DatabaseHandler {
 
         }
 
+        public void getClosestIncompleteSchedule(String conductorID, final OnSuccessCustomListener<Schedule> listener) {
+            Log.i(TAG, "Getting closest incomplete schedule of conductorID " + conductorID);
+
+            getScheduleRef().whereEqualTo("conductorID", conductorID)
+                    .whereEqualTo("completed", true)
+                    .orderBy("date").limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    ArrayList<Schedule> schedules = (ArrayList<Schedule>) queryDocumentSnapshots.toObjects(Schedule.class);
+                    if (schedules.size() != 0) {
+                        if (schedules.size() > 1) {
+                            Log.i(TAG, schedules.size() + "(>1) schedules found");
+                        }
+                        listener.onSuccess(schedules.get(0));
+                    } else {
+                        listener.onSuccess(null);
+                    }
+                }
+            });
+
+        }
+
         public void getActiveSchedule(final String busID, final OnSuccessCustomListener<Schedule> listener) {
             Log.i(TAG, "Getting active schedule started for: " + busID);
             getScheduleRef().whereEqualTo("busID", busID).whereEqualTo("active", true)
@@ -231,8 +253,8 @@ public class DatabaseHandler {
                     ArrayList<Schedule> loadedSchedules = (ArrayList<Schedule>) querySnapshot
                             .toObjects(Schedule.class);
                     if (loadedSchedules.size() != 0) {
-                        Log.i(TAG, loadedSchedules.size() + "(>1) active schedules found for bus " + busID);
                         if (loadedSchedules.size() > 1) {
+                            Log.i(TAG, loadedSchedules.size() + "(>1) active schedules found for bus " + busID);
                         }
                         listener.onSuccess(loadedSchedules.get(0));
                     } else {
@@ -328,7 +350,7 @@ public class DatabaseHandler {
         }
 
         public void getAllSchedulesOfConductorInTime(final String conductorID, Date start, Date end,
-                                                     final OnSuccessCustomListener<ArrayList<Schedule>> listener){
+                                                     final OnSuccessCustomListener<ArrayList<Schedule>> listener) {
             Log.i(TAG, "Getting schedules on " + start + " to " + end + " with conductorID " + conductorID);
 
             CollectionReference ref = getScheduleRef();
@@ -773,6 +795,44 @@ public class DatabaseHandler {
                     });
         }
 
+        public void getAllBookings(ArrayList<Schedule> schedules,
+                                   final OnSuccessCustomListener<ArrayList<Booking>> listener) {
+            Log.i(TAG, "Retrieving all bookings on " + schedules.size() + " schedules.");
+            ArrayList<String> scheduleIDs = new ArrayList<>();
+            for (Schedule schedule : schedules) {
+                scheduleIDs.add(schedule.getID());
+            }
+            getFireStore().collection("booking").whereIn("scheduleID", scheduleIDs)
+                    .get().addOnSuccessListener(
+                    new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(final QuerySnapshot querySnapshot) {
+                            ArrayList<Booking> loadedBookings = (ArrayList<Booking>) querySnapshot
+                                    .toObjects(Booking.class);
+                            ArrayList<Booking> validBookings = new ArrayList<>();
+                            for (final Booking booking : loadedBookings) {
+                                if (booking.validateBooking()) {
+                                    validBookings.add(booking);
+                                } else {
+                                    deleteBooking(booking)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(final Void aVoid) {
+                                                    Log.i(TAG, "Deleted booking due to time out " + booking.getID());
+                                                }
+                                            });
+                                }
+                            }
+                            listener.onSuccess(validBookings);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    listener.onFailure();
+                }
+            });
+        }
+
         // todo: Add Bus as a parameter and load only bookings of a particular bus
         public void getAllBookingsForDay(final OnSuccessCustomListener<ArrayList<Booking>> listener) {
             Calendar calendar = Calendar.getInstance();
@@ -1040,8 +1100,8 @@ public class DatabaseHandler {
                                     }
                                 }
 
-                                }
                             }
+                        }
 
                     });
             // add basic route details
