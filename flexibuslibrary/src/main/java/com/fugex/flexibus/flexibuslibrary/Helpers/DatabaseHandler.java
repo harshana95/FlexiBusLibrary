@@ -226,7 +226,7 @@ public class DatabaseHandler {
             Log.i(TAG, "Getting closest incomplete schedule of conductorID " + conductorID);
 
             getScheduleRef().whereEqualTo("conductorID", conductorID)
-                    .whereEqualTo("completed", true)
+                    .whereEqualTo("completed", false)
                     .orderBy("date").limit(1).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
